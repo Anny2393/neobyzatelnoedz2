@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import {Todolist} from './Todolist';
+
+export type FilterValuesType = "all" | "active" | "completed" | "three";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    let [tasks, setTasks] = useState([
+        {id: 1, title: "HTML&CSS", isDone: true},
+        {id: 2, title: "JS", isDone: true},
+        {id: 3, title: "ReactJS", isDone: false},
+        {id: 4, title: "Rest API", isDone: false},
+        {id: 5, title: "GraphQL", isDone: false},
+    ]);
+
+    function removeTask(id: number) {
+        let filteredTasks = tasks.filter(t => t.id != id);
+        setTasks(filteredTasks);
+    }
+
+    function deleteAllTasks () {
+        setTasks([]);
+    }
+
+    return (
+        <div className="App">
+            <Todolist title="What to learn"
+                      tasks={tasks}
+                      removeTask={removeTask}
+                      deleteAllTasks={deleteAllTasks}
+                      />
+        </div>
+    );
 }
 
 export default App;
